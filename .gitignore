@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual env
+.venv/
+venv/
+
+# Логи
+debug.log
+errors.log
+
+# Environment
+.env
+.env.*
+
+# Database
+pg_data/
+
+# Uploads
+uploads/
+
+# Private files
+storage/
+
+# Build
+build/
+dist/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
