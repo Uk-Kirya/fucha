@@ -5,10 +5,10 @@ echo "Running Alembic migrations..."
 uv run alembic upgrade head
 
 echo "Seeding roles..."
-# uv run -m app.seeds.roles
+uv run -m app.seeds.roles
 
 echo "Seeding admin user..."
-# uv run -m app.seeds.admin
+uv run -m app.seeds.admin
 
 exec "$@"
 
