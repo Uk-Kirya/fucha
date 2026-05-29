@@ -6,5 +6,12 @@
 </head>
 <body>
     <h1>Hello, Admin!</h1>
+    <ul>
+        <li><b>User ID:</b> {{ user }}</li>
+        <li><b>Access Token:</b> {{ access }}</li>
+        <li><b>Refresh Token Cookies:</b> {{ refresh }}</li>
+        <li><b>Refresh Token Redis:</b> {{ refresh_redis }}</li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
 </body>
 </html>
