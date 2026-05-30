@@ -117,14 +117,18 @@ class AuthMiddleware(BaseHTTPMiddleware):
             response.set_cookie(
                 "access_token",
                 new_access,
+                max_age=REFRESH_TTL,
                 httponly=True,
+                samesite="lax"
             )
 
         if new_refresh:
             response.set_cookie(
                 "refresh_token",
                 new_refresh,
+                max_age=REFRESH_TTL,
                 httponly=True,
+                samesite="lax"
             )
 
         # =========================

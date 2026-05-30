@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Request, Depends
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from jose import jwt, JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -10,7 +10,6 @@ from app.domain.user.model import UserDomain
 from app.models import User
 from app.redis import redis_client
 from app.settings import templates, settings
-from app.utils.flash import set_flash
 from app.utils.generate_tokens import csrf_token_gen, csrf_token_check
 from app.utils.get_current_user import authorized_user
 from app.utils.jwt_tokens import create_access_token, create_refresh_token, ALGORITHM, blacklist_token, REFRESH_TTL
@@ -108,8 +107,8 @@ async def get_login_page(
     next_url = request.session.pop("next_url", "/home")
     response = RedirectResponse(url=next_url, status_code=302)
 
-    response.set_cookie("access_token", access, httponly=True)
-    response.set_cookie("refresh_token", refresh, httponly=True)
+    response.set_cookie("access_token", access, max_age=REFRESH_TTL, httponly=True, samesite="lax")
+    response.set_cookie("refresh_token", refresh, max_age=REFRESH_TTL, httponly=True, samesite="lax")
 
     return response
 
