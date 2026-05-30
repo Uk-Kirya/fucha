@@ -21,6 +21,7 @@ class DeviceDefinitionMiddleware(BaseHTTPMiddleware):
             '/docs',
             '/openapi.json',
             '/redoc',
+            '/test',
         ]
         current_path = request.url.path
         if any(current_path.startswith(path) or current_path == path for path in excluded_paths):

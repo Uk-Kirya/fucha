@@ -37,7 +37,7 @@ app.add_exception_handler(
 
 # Proxy headers
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
-app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "fucha.losdesign.ru"])
+app.add_middleware(TrustedHostMiddleware, allowed_hosts="*")
 
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(AuthMiddleware)
