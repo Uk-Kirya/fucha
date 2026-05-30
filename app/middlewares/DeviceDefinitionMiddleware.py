@@ -15,6 +15,11 @@ class DeviceDefinitionMiddleware(BaseHTTPMiddleware):
         is_mobile = bool(
             re.search(r"Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile", user_agent, re.I))
 
+        # Исключаем статические файлы и API endpoints
+        if request.url.path.startswith('/static'):
+            response = await call_next(request)
+            return response
+
         if request.url.path == '/mobile-only':
             if is_mobile:
                 return RedirectResponse("/", status_code=303)
