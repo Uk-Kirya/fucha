@@ -18,14 +18,15 @@ class DeviceDefinitionMiddleware(BaseHTTPMiddleware):
         if request.url.path == '/mobile-only':
             if is_mobile:
                 return RedirectResponse("/", status_code=303)
+
             response = await call_next(request)
             return response
 
-        # if not is_mobile:
-        #     return RedirectResponse(
-        #         url='/mobile-only',
-        #         status_code=303,
-        #     )
+        if not is_mobile:
+            return RedirectResponse(
+                url='/mobile-only',
+                status_code=302,
+            )
 
         response = await call_next(request)
         return response

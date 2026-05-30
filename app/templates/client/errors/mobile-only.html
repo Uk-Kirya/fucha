@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .s__1 {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="s__1">
+        <picture>
+            <img src="{{ url_for('static', path='client/img/no-way.jpg') }}" alt="" width="800">
+        </picture>
+        <h2>Нельзя просто так взять, и открыть наш сервис с компа</h2>
+        <p>Пожалуйста, откройте с телефона</p>
+        <picture>
+            <img src="{{ url_for('static', path='client/img/qr.svg') }}" alt="" width="200">
+        </picture>
+    </div>
+</body>
+</html>

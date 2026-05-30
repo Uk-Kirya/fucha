@@ -1,0 +1,30 @@
+{% extends 'client/includes/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {% if user %}
+                    <h1>Hello, {{ user.name }}!</h1>
+                    <ul>
+                        <li><b>ID</b> {{ user.id }}</li>
+                        <li><b>Name</b> {{ user.name }}</li>
+                        <li><b>E-mail</b> {{ user.email }}</li>
+                        <li><b>Created at</b> {{ user.created_at_msk }}</li>
+                        <li><b>Last login</b> {{ user.last_login_msk }}</li>
+                        <li><b>Active</b> {{ user.is_active }}</li>
+                        <li><b>Verified</b> {{ user.is_verified }}</li>
+                        <li><b>Role</b> {{ user.role.name }}</li>
+                        <li><b>Photo</b> {{ user.photo or '—' }}</li>
+                    </ul>
+                {% else %}
+                    <h1>Hello, guest!</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

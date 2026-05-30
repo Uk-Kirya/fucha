@@ -1,8 +1,9 @@
-from jose import jwt, JWTError
+from starlette.responses import RedirectResponse
 
 from app.database import get_async_db
 from app.models import User
 from app.redis import redis_client
+from app.schemas.user_schema import UserWithRole
 from app.settings import templates, settings
 
 from fastapi import APIRouter, Depends, Request
@@ -10,24 +11,25 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.logs.logger_config import logger
+from app.utils.flash import set_flash
+from app.utils.get_current_user import require_roles
 
-from app.utils.jwt_tokens import SECRET_KEY, ALGORITHM, is_blacklisted
-
-admin = APIRouter(
+home = APIRouter(
     include_in_schema=True,
     prefix="/admin",
     tags=["Панель администрирования"]
 )
 
 
-@admin.get(
+@home.get(
     path="/",
     response_class=HTMLResponse,
     summary="Админ.панель сайта"
 )
 async def get_admin(
         request: Request,
-) -> HTMLResponse:
+        user: User = Depends(require_roles(["admin"])),
+) -> HTMLResponse or RedirectResponse:
     """
     Страница панели администрирования
     """
@@ -38,7 +40,7 @@ async def get_admin(
         "admin/home.html",
         {
             "request": request,
-            "user": request.state.user,
+            "user": UserWithRole.model_validate(user),
             "access": request.cookies.get("access_token", None),
             "refresh": request.cookies.get("refresh_token", None),
             "refresh_redis": await redis_client.get(f"refresh:{refresh}"),

@@ -5,13 +5,26 @@
     <title>Admin</title>
 </head>
 <body>
-    <h1>Hello, Admin!</h1>
+    <h1>Hello, {{ user.name }}!</h1>
     <ul>
-        <li><b>User ID:</b> {{ user }}</li>
-        <li><b>Access Token:</b> {{ access }}</li>
-        <li><b>Refresh Token Cookies:</b> {{ refresh }}</li>
-        <li><b>Refresh Token Redis:</b> {{ refresh_redis }}</li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        <li><b>ID</b> {{ user.id }}</li>
+        <li><b>Name</b> {{ user.name }}</li>
+        <li><b>E-mail</b> {{ user.email }}</li>
+        <li><b>Created at</b> {{ user.created_at_msk }}</li>
+        <li><b>Last login</b> {{ user.last_login_msk }}</li>
+        <li><b>Active</b> {{ user.is_active }}</li>
+        <li><b>Verified</b> {{ user.is_verified }}</li>
+        <li><b>Role</b> {{ user.role.name }}</li>
+        <li><b>Photo</b> {{ user.photo or '—' }}</li>
     </ul>
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    {% if flash %}
+        <ul>
+            {% for message in flash.messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

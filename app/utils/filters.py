@@ -35,8 +35,32 @@ def short_description(value: str) -> str:
         return ''
 
 
+def format_ttl(ttl_seconds: int) -> str:
+    """Форматирует TTL в человекочитаемый вид"""
+    if ttl_seconds <= 0:
+        return "expired"
+
+    days = ttl_seconds // 86400
+    hours = (ttl_seconds % 86400) // 3600
+    minutes = (ttl_seconds % 3600) // 60
+    seconds = ttl_seconds % 60
+
+    parts = []
+    if days > 0:
+        parts.append(f"{days}d")
+    if hours > 0:
+        parts.append(f"{hours}h")
+    if minutes > 0:
+        parts.append(f"{minutes}m")
+    if seconds > 0 or not parts:
+        parts.append(f"{seconds}s")
+
+    return " ".join(parts)
+
+
 # Все доступные фильтры
 filters = {
     "datetime": datetime_filter,
-    "short_description": short_description
+    "short_description": short_description,
+    "format_ttl": format_ttl,
 }

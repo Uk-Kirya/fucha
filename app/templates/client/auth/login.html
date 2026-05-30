@@ -1,0 +1,29 @@
+{% extends 'client/includes/base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1>Enter your Credentials</h1>
+                <form method="post" class="needs-validation" novalidate>
+
+                    <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
+
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email" class="form-control" id="emailInput" placeholder="E-mail" value="{{ form_data.get('email', '') }}" required>
+                        <label for="emailInput">E-mail</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password" value="{{ form_data.get('password', '') }}" required>
+                        <label for="passwordInput">Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 p-3">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -36,7 +36,7 @@ class LoggerMiddleware(BaseHTTPMiddleware):
 
             if response.status_code == 429:
                 return templates.TemplateResponse(
-                    "errors/429.html",
+                    "client/errors/429.html",
                     {
                         "request": request,
                         "retry_after": response.headers.get("Retry-After"),
@@ -46,7 +46,7 @@ class LoggerMiddleware(BaseHTTPMiddleware):
 
             if response.status_code == 403:
                 return templates.TemplateResponse(
-                    "errors/403.html",
+                    "client/errors/403.html",
                     {
                         "request": request,
                     },
@@ -57,7 +57,7 @@ class LoggerMiddleware(BaseHTTPMiddleware):
                 agreed = getattr(request.state, "agreed", False)
 
                 return templates.TemplateResponse(
-                    "errors/400.html",
+                    "client/errors/400.html",
                     {
                         "request": request,
                         "agreed": agreed,
@@ -82,7 +82,7 @@ class LoggerMiddleware(BaseHTTPMiddleware):
             agreed = getattr(request.state, "agreed", False)
 
             return templates.TemplateResponse(
-                "errors/500.html",
+                "client/errors/500.html",
                 {
                     "request": request,
                     "agreed": agreed,

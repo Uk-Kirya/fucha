@@ -1,8 +1,5 @@
-from .auth import auth
-
-from app.routes.admin.admin import admin
+from app.routes.test import test
 
 __all__ = [
-    "admin",
-    "auth",
+    "test",
 ]

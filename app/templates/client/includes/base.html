@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ url_for('static', path='fav.png') }}" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', path='client/css/style.css' )}}?v=1">
+</head>
+
+<body class="d-flex flex-column vh-100">
+
+    {% include 'client/includes/header.html' %}
+    {% block content %}{% endblock %}
+    {% include 'client/includes/footer.html' %}
+    {% include 'client/includes/modals.html' %}
+    {% include 'client/includes/scripts.html' %}
+
+</body>
+
+</html>

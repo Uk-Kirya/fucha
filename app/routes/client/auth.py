@@ -6,11 +6,13 @@ from jose import jwt, JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_async_db
+from app.domain.user.model import UserDomain
 from app.models import User
 from app.redis import redis_client
 from app.settings import templates, settings
 from app.utils.flash import set_flash
 from app.utils.generate_tokens import csrf_token_gen, csrf_token_check
+from app.utils.get_current_user import authorized_user
 from app.utils.jwt_tokens import create_access_token, create_refresh_token, ALGORITHM, blacklist_token, REFRESH_TTL
 from app.utils.user_exists import user_exists
 
@@ -23,19 +25,22 @@ auth = APIRouter(
 @auth.get(
     path="/",
     response_class=HTMLResponse,
+    name='welcome',
     summary="Страница приветствие"
 )
 async def welcome_page(
         request: Request,
+        _: None = Depends(authorized_user),
 ) -> HTMLResponse or RedirectResponse:
     """
     Страница приветствие
+    :param _: Check User
     :param request: Request object
     :return: HTMLResponse
     """
 
     return templates.TemplateResponse(
-        "auth/welcome.html",
+        "client/welcome.html",
         {
             "request": request,
         },
@@ -45,21 +50,24 @@ async def welcome_page(
 @auth.get(
     path='/login',
     summary='Страница логирования',
+    name='login',
     response_class=HTMLResponse
 )
 async def get_login_page(
         request: Request,
-        csrf_token: str = Depends(csrf_token_gen)
+        csrf_token: str = Depends(csrf_token_gen),
+        _: None = Depends(authorized_user),
 ) -> HTMLResponse:
     """
     Страница логирования. Вводим логин и пароль и отправляем на проверку форму
+    :param _: Check User
     :param request: Request object
     :param csrf_token: CSRF token
     :return: HTMLResponse
     """
 
     return templates.TemplateResponse(
-        "auth/login.html",
+        "client/auth/login.html",
         {
             "request": request,
             "csrf_token": csrf_token,
@@ -76,9 +84,11 @@ async def get_login_page(
         request: Request,
         _: None = Depends(csrf_token_check),
         user: User = Depends(user_exists),
+        db: AsyncSession = Depends(get_async_db),
 ) -> RedirectResponse:
     """
     Проверка данных из формы и последующее логирование в приложении
+    :param db: AsyncSession
     :param request: Request object
     :param user: User object
     :param _: Check CSRF Token from form
@@ -92,7 +102,11 @@ async def get_login_page(
 
     await redis_client.setex(f"refresh:{refresh}", REFRESH_TTL, str(user_id))
 
-    response = RedirectResponse(url='/admin', status_code=302)
+    UserDomain(user).set_last_login()
+    await db.commit()
+
+    next_url = request.session.pop("next_url", "/home")
+    response = RedirectResponse(url=next_url, status_code=302)
 
     response.set_cookie("access_token", access, httponly=True)
     response.set_cookie("refresh_token", refresh, httponly=True)
@@ -116,6 +130,7 @@ async def logout(
 
     access_token = request.cookies.get("access_token")
     refresh_token = request.cookies.get("refresh_token")
+
     if access_token:
         try:
             payload = jwt.decode(
@@ -131,7 +146,8 @@ async def logout(
             if jti and expires:
                 now = datetime.now(timezone.utc).timestamp()
                 ttl = int(expires - now)
-                await blacklist_token(jti, ttl)
+                if now < expires:
+                    await blacklist_token(jti, ttl)
         except JWTError:
             pass
 
@@ -139,11 +155,6 @@ async def logout(
     await redis_client.delete(f"refresh:{refresh_token}")
     response.delete_cookie("access_token")
     response.delete_cookie("refresh_token")
-
-    keys = await redis_client.keys("refresh:*")
-
-    for key in keys:
-        await redis_client.delete(key)
 
     return response
 
@@ -162,79 +173,8 @@ async def get_mobile_only_page(
     :return: HTMLResponse
     """
     return templates.TemplateResponse(
-        "errors/mobile-only.html",
+        "client/errors/mobile-only.html",
         {
             "request": request,
         }
     )
-
-
-@auth.get(
-    path="/cookies",
-    summary="Просмотр Cookies"
-)
-async def redis_sessions(
-        request: Request
-) -> JSONResponse:
-    sessions = {
-        "cookies": {
-            "access_token": request.cookies.get("access_token"),
-            "refresh_token": request.cookies.get("refresh_token"),
-        },
-    }
-
-    return JSONResponse(content=sessions)
-
-
-@auth.get(
-    path="/blacklist",
-    summary='Просмотр Redis Blacklist'
-)
-async def get_blacklist():
-    cursor = 0
-    keys = []
-
-    while True:
-        cursor, partial = await redis_client.scan(
-            cursor=cursor,
-            match="blacklist:*",
-            count=100
-        )
-        keys.extend(partial)
-
-        if cursor == 0:
-            break
-
-    data = {}
-
-    for key in keys:
-        data[key] = await redis_client.get(key)
-
-    return {"blacklist": data}
-
-
-@auth.get(
-    path="/refresh",
-    summary='Просмотр Redis Refresh Tokens',
-)
-async def get_refresh():
-    cursor = 0
-    keys = []
-
-    while True:
-        cursor, partial = await redis_client.scan(
-            cursor=cursor,
-            match="refresh:*",
-            count=100
-        )
-        keys.extend(partial)
-
-        if cursor == 0:
-            break
-
-    data = {}
-
-    for key in keys:
-        data[key] = await redis_client.get(key)
-
-    return {"refresh": data}

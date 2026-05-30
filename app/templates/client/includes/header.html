@@ -1,0 +1,19 @@
+<header>
+    <div class="container-fluid mb-5 mt-2">
+        <div class="row">
+            <div class="col d-flex align-items-center justify-content-between">
+                <a href="{{ url_for('welcome') }}"><h3 class="m-0">Fucha</h3></a>
+                {% if request.state.user %}
+                    <div class="d-flex align-items-center gap-4">
+                        <a href="{{ url_for('profile') }}">My profile</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                {% else %}
+                    {% if request.url.path not in '/login' %}
+                        <a href="{{ url_for('login') }}">Login</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

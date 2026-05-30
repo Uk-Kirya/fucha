@@ -1,0 +1,57 @@
+body {
+    font-family: 'Arial', sans-serif !important;
+}
+
+select,
+button,
+a,
+input,
+textarea,
+img {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong {
+    font-weight: 800 !important;
+}
+
+a,
+button {
+    text-decoration: none !important;
+    transition: .3s all !important;
+}
+
+img {
+    max-width: 100% !important;
+    border: 0 !important;
+}
+
+@media (min-width: 1440px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1300px;
+    }
+}
+
+@media (max-width: 1400px) {}
+
+@media (max-width: 1200px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 576px) {}

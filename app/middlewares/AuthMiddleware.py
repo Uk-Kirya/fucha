@@ -1,8 +1,12 @@
 from jose import jwt, JWTError, ExpiredSignatureError
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 
+from app.database import AsyncSessionLocal
+from app.models import User
 from app.redis import redis_client
 from app.settings import settings
 from app.utils.jwt_tokens import (
@@ -16,9 +20,6 @@ from app.utils.jwt_tokens import (
 class AuthMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
-        access_token = None
-        refresh_token = None
-
         user_id = None
 
         new_access = None
@@ -93,7 +94,19 @@ class AuthMiddleware(BaseHTTPMiddleware):
         # =========================
         # 📦 SAVE USER
         # =========================
-        request.state.user = user_id
+
+        try:
+            async with AsyncSessionLocal() as db:
+                result = await db.execute(
+                    select(User)
+                    .options(selectinload(User.role))
+                    .where(User.id == user_id)
+                )
+                user = result.scalar_one_or_none()
+        except Exception:
+            user = None
+
+        request.state.user = user
 
         response: Response = await call_next(request)
 

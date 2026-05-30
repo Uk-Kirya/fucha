@@ -1,0 +1,50 @@
+<footer class="mt-auto">
+    <div class="container-fluid mb-2">
+        <div class="row d-flex flex-column gap-4">
+            <div class="col d-flex align-items-center gap-2 justify-content-between">
+                <div>
+                    <a href="{{ url_for('home') }}" class="btn rounded-5 pt-2 pb-2 ps-3 pe-3 {% if request.url.path == '/home' %} btn-primary {% else %} btn-outline-primary {% endif %}">Home</a>
+                    <a href="{{ url_for('challenges') }}" class="btn rounded-5 pt-2 pb-2 ps-3 pe-3 {% if request.url.path == '/challenges' %} btn-primary {% else %} btn-outline-primary {% endif %}">Challanges</a>
+                </div>
+                <button class="btn btn-success rounded-5" data-bs-toggle="modal" data-bs-target="#modal">Add +</button>
+            </div>
+            <div class="col">
+                © {{ year }} Fucha
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% if flash %}
+    <div class="mt-3 alert alert-{{ flash.category }} text-start flash__alert">
+        <ul>
+            {% for message in flash.messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ищем контейнер flash-сообщений
+        const flashContainers = document.querySelectorAll('.alert');
+
+        flashContainers.forEach(function(container) {
+            setTimeout(function() {
+                // Плавное исчезновение
+                container.style.transition = 'opacity 0.5s ease';
+                container.style.opacity = '0';
+
+                // Удаление после анимации
+                setTimeout(function() {
+                    const parentCol = container.closest('.col-12');
+                    if (parentCol && parentCol.parentElement) {
+                        parentCol.remove();
+                    }
+                }, 500);
+
+            }, 3000);
+        });
+    });
+</script>

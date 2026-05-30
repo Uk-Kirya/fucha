@@ -8,10 +8,11 @@ from app import models
 from app.core.limiter import limiter
 from app.database import engine
 from app.redis import redis_client
-from app.routes import (
-    auth,
-    admin,
-)
+
+from app.routes import test
+from app.routes.admin import home as admin_home
+from app.routes.client import home as client_home, auth, profile as client_profile, challenges as client_challenges
+
 from app.settings import settings
 
 from app.middlewares import (
@@ -48,9 +49,15 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 # Роуты авторизации / регистрации / восстановления доступа
 app.include_router(auth)
+app.include_router(client_home)
+app.include_router(client_profile)
+app.include_router(client_challenges)
 
 # Роуты панели администрирования
-app.include_router(admin)
+app.include_router(admin_home)
+
+# Роуты тестирования (Redis / Cookies / Session)
+app.include_router(test)
 
 # Статика и загруженные файлы
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
