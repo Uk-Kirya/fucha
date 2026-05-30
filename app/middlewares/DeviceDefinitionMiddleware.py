@@ -16,7 +16,7 @@ class DeviceDefinitionMiddleware(BaseHTTPMiddleware):
             re.search(r"Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile", user_agent, re.I))
 
         # Исключаем статические файлы и API endpoints
-        if request.url.path.startswith('/static'):
+        if request.url.path.startswith('/static') or request.url.path.startswith('/docs'):
             response = await call_next(request)
             return response
 
