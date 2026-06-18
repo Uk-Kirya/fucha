@@ -4,56 +4,91 @@
     Home
 {% endblock %}
 
+{% include 'client/includes/header.html' %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row d-flex flex-column">
-            <div class="col">
-                <h1 class="mb-4">My Challenges</h1>
-            </div>
-            <div class="col">
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Item 1</h5>
-                                <p class="card-text">Item description</p>
-                                <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+    <main>
+        <h1>Мои планы</h1>
+        <!--
+        <div class="container-fluid">
+            <div class="row d-flex flex-column">
+                <div class="col">
+
+                </div>
+                <div class="col">
+                    <div class="card mb-3 w-100">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Item 1</h5>
+                                    <p class="card-text">Item description</p>
+                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Item 1</h5>
-                                <p class="card-text">Item description</p>
-                                <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                    <div class="card mb-3 w-100">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Item 1</h5>
+                                    <p class="card-text">Item description</p>
+                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                    <div class="card mb-3 w-100">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Item 1</h5>
+                                    <p class="card-text">Item description</p>
+                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Item 1</h5>
-                                <p class="card-text">Item description</p>
-                                <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                    </div>
+                    <div class="card mb-3 w-100">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Item 1</h5>
+                                    <p class="card-text">Item description</p>
+                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 w-100">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Item 1</h5>
+                                    <p class="card-text">Item description</p>
+                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        -->
+    </main>
 {% endblock %}

@@ -43,7 +43,7 @@ app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(AuthMiddleware)
 app.add_middleware(FlashMiddleware)
 app.add_middleware(LoggerMiddleware)
-app.add_middleware(DeviceDefinitionMiddleware)
+# app.add_middleware(DeviceDefinitionMiddleware)
 app.add_middleware(CookieMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 

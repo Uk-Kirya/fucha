@@ -1,18 +1,25 @@
-<footer class="mt-auto">
-    <div class="container-fluid mb-2">
-        <div class="row d-flex flex-column gap-4">
-            <div class="col d-flex align-items-center gap-2 justify-content-between">
-                <div>
-                    <a href="{{ url_for('home') }}" class="btn rounded-5 pt-2 pb-2 ps-3 pe-3 {% if request.url.path == '/home' %} btn-primary {% else %} btn-outline-primary {% endif %}">Home</a>
-                    <a href="{{ url_for('challenges') }}" class="btn rounded-5 pt-2 pb-2 ps-3 pe-3 {% if request.url.path == '/challenges' %} btn-primary {% else %} btn-outline-primary {% endif %}">Challanges</a>
-                </div>
-                <button class="btn btn-success rounded-5" data-bs-toggle="modal" data-bs-target="#modal">Add +</button>
-            </div>
-            <div class="col">
-                © {{ year }} Fucha
-            </div>
+<footer>
+    <div>
+        <div class="tabs">
+            <a href="{{ url_for('home') }}" class="{% if request.url.path == '/home' %} active__tab {% endif %}">
+                <picture>
+                    <img src="{{ url_for('static', path='client/img/home.svg') }}" alt="">
+                </picture>
+                Главная
+            </a>
+            <a href="{{ url_for('challenges') }}" class="{% if request.url.path == '/challenges' %} active__tab {% endif %}">
+                <picture>
+                    <img src="{{ url_for('static', path='client/img/target.svg') }}" alt="">
+                </picture>
+                Челленджи
+            </a>
         </div>
     </div>
+    <a href="#" class="add__button">
+        <picture>
+            <img src="{{ url_for('static', path='client/img/plus.svg') }}" alt="">
+        </picture>
+    </a>
 </footer>
 
 {% if flash %}

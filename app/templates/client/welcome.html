@@ -4,12 +4,14 @@
     Welcome
 {% endblock %}
 
+{% include 'client/includes/header.html' %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center">
                 <h1 class="display-1">Welcome!</h1>
-                <a href="{{ url_for('get_login_page') }}" class="btn btn-primary p-3 w-100">Login</a>
+                <a href="{{ url_for('get_register') }}" class="btn btn-primary p-3 w-100">Login</a>
             </div>
         </div>
     </div>

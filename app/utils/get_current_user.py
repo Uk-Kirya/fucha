@@ -1,6 +1,12 @@
 from fastapi import Request, HTTPException, Depends
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload
+
 from app.models import User
 from app.utils.flash import set_flash
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.database import get_async_db
 
 
 def require_roles(roles: list[str]):
@@ -20,8 +26,18 @@ def require_roles(roles: list[str]):
     return checker
 
 
-async def get_user(request: Request) -> User:
+async def get_user(
+        request: Request,
+        db: AsyncSession = Depends(get_async_db),
+) -> User:
     user = request.state.user
+
+    if not user:
+        request.session["next_url"] = str(request.url)
+        raise HTTPException(status_code=302, headers={"Location": "/login"})
+
+    stmt = select(User).where(User.id == user.id).options(selectinload(User.role))
+    user = (await db.execute(stmt)).scalar_one_or_none()
 
     if not user:
         request.session["next_url"] = str(request.url)

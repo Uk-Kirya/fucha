@@ -177,3 +177,22 @@ async def get_mobile_only_page(
             "request": request,
         }
     )
+
+
+@auth.get(
+    path="/registration",
+    response_class=HTMLResponse,
+    summary="Регистрация в приложении",
+)
+async def get_register(
+        request: Request,
+        csrf_token: str = Depends(csrf_token_gen),
+        _: None = Depends(authorized_user),
+) -> HTMLResponse or RedirectResponse:
+    return templates.TemplateResponse(
+        "client/auth/register.html",
+        {
+            "request": request,
+            "csrf_token": csrf_token,
+        },
+    )
