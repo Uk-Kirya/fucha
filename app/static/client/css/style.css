@@ -144,6 +144,7 @@ footer {
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    opacity: .4;
 }
 
 .tabs a {
@@ -152,12 +153,13 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 0;
+    width: 98px;
     height: 48px;
     text-align: center;
     font-size: 11px;
     color: var(--black);
     border-radius: 5rem;
-    padding: .375rem 1.5rem;
+    padding: .375rem 0;
     letter-spacing: -5%;
 }
 
