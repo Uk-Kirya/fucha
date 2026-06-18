@@ -15,6 +15,8 @@
             <button data-category-id="2">Хобби</button>
             <button data-category-id="3">Лайфстайл</button>
             <button data-category-id="4">Привычка</button>
+            <button data-category-id="5">Здоровье</button>
+            <button data-category-id="6">Бизнес</button>
         </div>
         <div class="challenges__list">
             <div class="challenge__big__card" data-category-id="1">
@@ -42,13 +44,7 @@
                         </ul>
                     </div>
                     <div class="challenge__big__card__text__indicator">
-                        <span data-percent="50%"></span>
-                        <script>
-                            document.querySelectorAll('span[data-percent]').forEach(el => {
-                                const percent = el.dataset.percent;
-                                el.style.setProperty('--percent', percent);
-                            });
-                        </script>
+                        <span data-percent="10%"></span>
                         <div>
                             <b>11</b> из 31 дней
                         </div>
@@ -80,13 +76,7 @@
                         </ul>
                     </div>
                     <div class="challenge__big__card__text__indicator">
-                        <span data-percent="50%"></span>
-                        <script>
-                            document.querySelectorAll('span[data-percent]').forEach(el => {
-                                const percent = el.dataset.percent;
-                                el.style.setProperty('--percent', percent);
-                            });
-                        </script>
+                        <span data-percent="33%"></span>
                         <div>
                             <b>11</b> из 31 дней
                         </div>
@@ -118,13 +108,7 @@
                         </ul>
                     </div>
                     <div class="challenge__big__card__text__indicator">
-                        <span data-percent="50%"></span>
-                        <script>
-                            document.querySelectorAll('span[data-percent]').forEach(el => {
-                                const percent = el.dataset.percent;
-                                el.style.setProperty('--percent', percent);
-                            });
-                        </script>
+                        <span data-percent="91%"></span>
                         <div>
                             <b>11</b> из 31 дней
                         </div>
@@ -156,13 +140,71 @@
                         </ul>
                     </div>
                     <div class="challenge__big__card__text__indicator">
-                        <span data-percent="50%"></span>
-                        <script>
-                            document.querySelectorAll('span[data-percent]').forEach(el => {
-                                const percent = el.dataset.percent;
-                                el.style.setProperty('--percent', percent);
-                            });
-                        </script>
+                        <span data-percent="76%"></span>
+                        <div>
+                            <b>11</b> из 31 дней
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="challenge__big__card" data-category-id="5">
+                <div class="challenge__big__card__cover">
+                    <span>
+                        <picture>
+                            <img src="{{ url_for('static', path='client/img/fire.svg') }}" alt="">
+                        </picture>
+                        11
+                    </span>
+                    <picture>
+                        <img src="{{ url_for('static', path='client/img/img1.png') }}" alt="">
+                    </picture>
+                </div>
+                <div class="challenge__big__card__text">
+                    <div>
+                        <picture>
+                            <img src="{{ url_for('static', path='client/img/more.svg') }}" alt="">
+                        </picture>
+                        <h2>Готовлюсь к веломарафону 5</h2>
+                        <p>Буду проезжать каждый день по 20 км, а если не буду успевать, то переношу на следующий день</p>
+                        <ul>
+                            <li>Мой</li>
+                            <li>Спорт</li>
+                        </ul>
+                    </div>
+                    <div class="challenge__big__card__text__indicator">
+                        <span data-percent="27%"></span>
+                        <div>
+                            <b>11</b> из 31 дней
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="challenge__big__card" data-category-id="6">
+                <div class="challenge__big__card__cover">
+                    <span>
+                        <picture>
+                            <img src="{{ url_for('static', path='client/img/fire.svg') }}" alt="">
+                        </picture>
+                        11
+                    </span>
+                    <picture>
+                        <img src="{{ url_for('static', path='client/img/img1.png') }}" alt="">
+                    </picture>
+                </div>
+                <div class="challenge__big__card__text">
+                    <div>
+                        <picture>
+                            <img src="{{ url_for('static', path='client/img/more.svg') }}" alt="">
+                        </picture>
+                        <h2>Готовлюсь к веломарафону 6</h2>
+                        <p>Буду проезжать каждый день по 20 км, а если не буду успевать, то переношу на следующий день</p>
+                        <ul>
+                            <li>Мой</li>
+                            <li>Спорт</li>
+                        </ul>
+                    </div>
+                    <div class="challenge__big__card__text__indicator">
+                        <span data-percent="0%"></span>
                         <div>
                             <b>11</b> из 31 дней
                         </div>
@@ -173,47 +215,52 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
+                // Настройка индикаторов прогресса
+                document.querySelectorAll('.challenge__big__card__text__indicator span[data-percent]').forEach(el => {
+                    const percent = el.dataset.percent;
+                    el.style.setProperty('--percent', percent);
+                });
+
+                // Находим все кнопки категорий
                 const categoryButtons = document.querySelectorAll('.categories__tabs button');
+                // Находим все карточки
                 const cards = document.querySelectorAll('.challenge__big__card');
 
+                // Функция для фильтрации карточек
                 function filterCards(categoryId) {
-                    cards.forEach((card, index) => {
+                    cards.forEach(card => {
                         const cardCategoryId = card.dataset.categoryId;
 
                         if (categoryId === 'all' || cardCategoryId === categoryId) {
-                            card.style.display = '';
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(0.95)';
-
-                            // Анимация появления с задержкой
-                            setTimeout(() => {
-                                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                                card.style.opacity = '1';
-                                card.style.transform = 'scale(1)';
-                            }, index * 50);
+                            card.style.display = ''; // показываем карточку
                         } else {
-                            card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(0.95)';
-
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 200);
+                            card.style.display = 'none'; // скрываем карточку
                         }
                     });
                 }
 
+                // Обработчик клика на кнопки
                 categoryButtons.forEach(button => {
                     button.addEventListener('click', function() {
+                        // Убираем класс active у всех кнопок
                         categoryButtons.forEach(btn => btn.classList.remove('active__category'));
+                        // Добавляем класс active на нажатую кнопку
                         this.classList.add('active__category');
 
+                        // Получаем ID категории
                         const categoryId = this.dataset.categoryId;
-                        filterCards(categoryId || 'all');
+
+                        // Если это кнопка "Все" (у нее нет data-category-id)
+                        if (!categoryId) {
+                            filterCards('all');
+                        } else {
+                            filterCards(categoryId);
+                        }
                     });
                 });
             });
         </script>
+
         <!--
         <div class="container-fluid">
             <div class="row d-flex flex-column">

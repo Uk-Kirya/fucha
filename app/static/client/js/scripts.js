@@ -77,10 +77,3 @@ $(function () {
         else $('.head').removeClass('head_fixed');
     });
 });
-
-
-AOS.init({
-    duration: 1500,
-    offset: 0,
-    once: false
-});
