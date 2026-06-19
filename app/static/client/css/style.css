@@ -243,17 +243,17 @@ h1 {
     background-color: var(--black);
 }
 
-.categories__tabs::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 0;
     height: 0;
     background: transparent;
     display: none;
 }
 
-.categories__tabs::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: transparent;
 }
-.categories__tabs::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: transparent;
 }
 
