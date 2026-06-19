@@ -1,29 +1,16 @@
-<!--
 <header>
-    <div class="container-fluid mb-5 mt-2">
-        <div class="row">
-            <div class="col d-flex align-items-center justify-content-between">
-                <a href="{{ url_for('welcome') }}"><h3 class="m-0">Fucha</h3></a>
-                {% if request.state.user %}
-                    <div class="d-flex align-items-center gap-4">
-                        <a href="{{ url_for('profile') }}">My profile</a>
-                        <a href="{{ url_for('logout') }}">Logout</a>
-                    </div>
-                {% else %}
-                    {% if request.url.path not in '/login' %}
-                        <a href="{{ url_for('login') }}">Login</a>
-                    {% endif %}
-                {% endif %}
+    {% if user %}
+        <a href="#">
+            <div class="header__div__1">
+                <picture class="ava__plug">
+                    <img src="{{ url_for('static', path='client/img/smile.svg') }}" alt="">
+                </picture>
+                <picture>
+                    <img src="{{ url_for('static', path='client/img/fucha.svg') }}" alt="">
+                </picture>
             </div>
-        </div>
-    </div>
-</header>
--->
-
-{% if request.state.user %}
-    ...
-{% else %}
-    <header>
+        </a>
+    {% else %}
         <a href="{{ url_for('welcome') }}">
             <div class="header__div__1">
                 <picture class="ava__plug">
@@ -34,5 +21,5 @@
                 </picture>
             </div>
         </a>
-    </header>
-{% endif %}
+    {% endif %}
+</header>

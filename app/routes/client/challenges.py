@@ -4,8 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from app.models import User
 from app.schemas.user_schema import UserWithRole
 from app.settings import templates
-from app.utils import get_current_user
-from app.utils.get_current_user import user_or_guest, get_user, require_roles
+from app.utils.get_current_user import user_or_guest
 
 challenges = APIRouter(
     include_in_schema=True,

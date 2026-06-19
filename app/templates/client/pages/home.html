@@ -1,7 +1,7 @@
 {% extends 'client/includes/base.html' %}
 
 {% block title %}
-    Home
+    Мои планы
 {% endblock %}
 
 {% include 'client/includes/header.html' %}
@@ -9,6 +9,8 @@
 {% block content %}
     <main>
         <h1>Мои планы</h1>
+
+        <!-- Табы с категориями -->
         <div class="categories__tabs">
             <button class="active__category">Все</button>
             <button data-category-id="1">Спорт</button>
@@ -18,7 +20,11 @@
             <button data-category-id="5">Здоровье</button>
             <button data-category-id="6">Бизнес</button>
         </div>
+
+        <!-- Контейнер со списком челленджей -->
         <div class="challenges__list">
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="1">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -51,6 +57,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="2">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -83,6 +91,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="3">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -115,6 +125,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="4">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -147,6 +159,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="5">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -179,6 +193,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Карточка челленджа Большая -->
             <div class="challenge__big__card" data-category-id="6">
                 <div class="challenge__big__card__cover">
                     <span>
@@ -213,134 +229,5 @@
             </div>
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Настройка индикаторов прогресса
-                document.querySelectorAll('.challenge__big__card__text__indicator span[data-percent]').forEach(el => {
-                    const percent = el.dataset.percent;
-                    el.style.setProperty('--percent', percent);
-                });
-
-                // Находим все кнопки категорий
-                const categoryButtons = document.querySelectorAll('.categories__tabs button');
-                // Находим все карточки
-                const cards = document.querySelectorAll('.challenge__big__card');
-
-                // Функция для фильтрации карточек
-                function filterCards(categoryId) {
-                    cards.forEach(card => {
-                        const cardCategoryId = card.dataset.categoryId;
-
-                        if (categoryId === 'all' || cardCategoryId === categoryId) {
-                            card.style.display = ''; // показываем карточку
-                        } else {
-                            card.style.display = 'none'; // скрываем карточку
-                        }
-                    });
-                }
-
-                // Обработчик клика на кнопки
-                categoryButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Убираем класс active у всех кнопок
-                        categoryButtons.forEach(btn => btn.classList.remove('active__category'));
-                        // Добавляем класс active на нажатую кнопку
-                        this.classList.add('active__category');
-
-                        // Получаем ID категории
-                        const categoryId = this.dataset.categoryId;
-
-                        // Если это кнопка "Все" (у нее нет data-category-id)
-                        if (!categoryId) {
-                            filterCards('all');
-                        } else {
-                            filterCards(categoryId);
-                        }
-                    });
-                });
-            });
-        </script>
-
-        <!--
-        <div class="container-fluid">
-            <div class="row d-flex flex-column">
-                <div class="col">
-
-                </div>
-                <div class="col">
-                    <div class="card mb-3 w-100">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item 1</h5>
-                                    <p class="card-text">Item description</p>
-                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 w-100">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item 1</h5>
-                                    <p class="card-text">Item description</p>
-                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 w-100">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item 1</h5>
-                                    <p class="card-text">Item description</p>
-                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 w-100">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item 1</h5>
-                                    <p class="card-text">Item description</p>
-                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 w-100">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" class="img-fluid rounded-start" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item 1</h5>
-                                    <p class="card-text">Item description</p>
-                                    <p class="card-text"><small class="text-body-secondary">Progress bar</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
     </main>
 {% endblock %}
