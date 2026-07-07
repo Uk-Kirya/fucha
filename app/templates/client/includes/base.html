@@ -5,11 +5,11 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="{{ url_for('static', path='fav.png') }}" type="image/png">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="stylesheet" href="{{ url_for('static', path='client/css/style.css' )}}?v=4">
 </head>
 
-<body class="d-flex flex-column vh-100">
+<body class="d-flex flex-column vh-100" style="background: red;">
 
     {% block content %}{% endblock %}
     {% include 'client/includes/footer.html' %}
