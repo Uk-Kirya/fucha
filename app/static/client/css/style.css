@@ -600,7 +600,7 @@ span[data-percent]::after {
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
-    height: 100%;
+    height: 100vh;
 }
 
 .bg__image {
