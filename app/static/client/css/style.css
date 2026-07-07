@@ -46,6 +46,7 @@ em, i, .italic {
 body {
     font-family: 'SF UI Display Regular', 'Arial', sans-serif !important;
     background-color: var(--bg) !important;
+    min-height: 100%;
 }
 
 select,
@@ -601,6 +602,7 @@ span[data-percent]::after {
     align-items: start;
     justify-content: space-between;
     height: 100vh;
+    min-height: 100dvh;
 }
 
 .bg__image {
