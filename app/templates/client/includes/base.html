@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', path='client/css/style.css' )}}?v=4">
 </head>
 
-<body class="d-flex flex-column vh-100" style="background: red;">
+<body class="d-flex flex-column vh-100" style="background: red !important;">
 
     {% block content %}{% endblock %}
     {% include 'client/includes/footer.html' %}
