@@ -31,58 +31,6 @@ $(document).ready(function () {
 })
 
 
-$(document).ready(function () {
-    var owl = $('.categories');
-    var rowCount = 3; // Количество рядов
-
-    owl.owlCarousel({
-        margin: 0,
-        nav: false,
-        dots: false, // Отключаем стандартные точки
-        autoHeight: true,
-        loop: false,
-        items: 1.1,
-        owl2row: true,
-        owl2rowCount: rowCount
-    });
-
-    // Создаем кастомные точки
-    function createCustomDots() {
-        var itemsCount = owl.find('.owl2row-item').length;
-        var dotsContainer = $('<div class="owl-dots custom-dots"></div>');
-
-        for (var i = 0; i < itemsCount; i++) {
-            var dot = $('<button role="button" class="owl-dot"></button>');
-            if (i === 0) dot.addClass('active');
-            dot.data('index', i);
-            dotsContainer.append(dot);
-        }
-
-        $('.categories').append(dotsContainer);
-
-        // Обработчик клика
-        dotsContainer.find('.owl-dot').on('click', function() {
-            var index = $(this).data('index');
-            owl.trigger('to.owl.carousel', [index, 300]);
-        });
-    }
-
-    // Обновляем активную точку при смене слайда
-    owl.on('changed.owl.carousel', function(event) {
-        var currentIndex = event.item.index;
-        $('.categories .owl-dot').removeClass('active');
-        $('.categories .owl-dot').each(function() {
-            if ($(this).data('index') === currentIndex) {
-                $(this).addClass('active');
-            }
-        });
-    });
-
-    // Ждем инициализации и создаем точки
-    setTimeout(createCustomDots, 100);
-});
-
-
 /**
  * Owl2row
  * @since 2.0.2

@@ -38,6 +38,7 @@ em, i, .italic {
     --dots_owl_carousel: #DBDBD9;
     --primary: #B07DFC;
     --primary_dark: #965EEB;
+    --radius_1: 1rem;
 }
 
 /* Применяем SF UI Display как основной шрифт для всего документа */
@@ -513,6 +514,53 @@ span[data-percent]::after {
 .categories .owl-dots button.active {
     background-color: var(--black) !important;
     width: .5rem;
+}
+
+.welcome__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    text-align: center;
+    gap: .5rem;
+}
+
+.welcome__block h1 {
+    font-size: 22px;
+    letter-spacing: -2%;
+    color: var(--black);
+    font-weight: 700 !important;
+}
+
+.welcome__block p {
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: -5%;
+    color: var(--text_gray);
+    margin: 0;
+}
+
+.welcome__block a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    color: var(--bg);
+    border-radius: var(--radius_1);
+    background: var(--primary_dark);
+    line-height: 18px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -5%;
+    padding: 13px;
+}
+
+.welcome__block a:hover {
+    background-color: var(--primary);
 }
 
 @media (min-width: 1440px) {
