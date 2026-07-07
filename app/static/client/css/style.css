@@ -607,6 +607,7 @@ span[data-percent]::after {
     width: 100%;
     height: 200px;
     position: relative;
+    margin-top: calc(-1 * env(safe-area-inset-top));
 }
 
 .bg__image::after {
