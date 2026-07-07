@@ -1,26 +1,28 @@
-<footer>
-    <div>
-        <div class="tabs">
-            <a href="{{ url_for('home') }}" class="{% if request.url.path == '/home' %} active__tab {% endif %}">
-                <picture>
-                    <img src="{{ url_for('static', path='client/img/home.svg') }}" alt="">
-                </picture>
-                Главная
-            </a>
-            <a href="{{ url_for('challenges') }}" class="{% if request.url.path == '/challenges' %} active__tab {% endif %}">
-                <picture>
-                    <img src="{{ url_for('static', path='client/img/target.svg') }}" alt="">
-                </picture>
-                Челленджи
-            </a>
+{% if request.path != '/login' %}
+    <footer>
+        <div>
+            <div class="tabs">
+                <a href="{{ url_for('home') }}" class="{% if request.url.path == '/home' %} active__tab {% endif %}">
+                    <picture>
+                        <img src="{{ url_for('static', path='client/img/home.svg') }}" alt="">
+                    </picture>
+                    Главная
+                </a>
+                <a href="{{ url_for('challenges') }}" class="{% if request.url.path == '/challenges' %} active__tab {% endif %}">
+                    <picture>
+                        <img src="{{ url_for('static', path='client/img/target.svg') }}" alt="">
+                    </picture>
+                    Челленджи
+                </a>
+            </div>
         </div>
-    </div>
-    <a href="#" class="add__button">
-        <picture>
-            <img src="{{ url_for('static', path='client/img/plus.svg') }}" alt="">
-        </picture>
-    </a>
-</footer>
+        <a href="#" class="add__button">
+            <picture>
+                <img src="{{ url_for('static', path='client/img/plus.svg') }}" alt="">
+            </picture>
+        </a>
+    </footer>
+{% endif %}
 
 {% if flash %}
     <div class="mt-3 alert alert-{{ flash.category }} text-start flash__alert">

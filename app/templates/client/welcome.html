@@ -1,7 +1,7 @@
 {% extends 'client/includes/base.html' %}
 
 {% block title %}
-    Welcome
+    Добро Пожаловать!
 {% endblock %}
 
 {% include 'client/includes/header.html' %}
@@ -10,6 +10,6 @@
     <div class="welcome__block">
         <h1>Создайте бесплатный аккаунт или войдите в существующий</h1>
         <p>Создавайте планы и челленджи или участвуйте в челленджах сообщества.</p>
-        <a href="{{ url_for('get_login_page') }}">Войти или создать аккаунт</a>
+        <a href="{{ url_for('get_login_page') }}" class="button__1">Войти или создать аккаунт</a>
     </div>
 {% endblock %}

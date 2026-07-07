@@ -1,30 +1,129 @@
 {% extends 'client/includes/base.html' %}
 
 {% block title %}
-    Login
+    Вход и Регистрация
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <h1>Enter your Credentials</h1>
-                <form method="post" class="needs-validation" novalidate>
 
-                    <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
+    <div class="auth__page">
+        <a href="{{ url_for('welcome') }}" class="close__button close__button__type__1">
+            <picture>
+                <img src="{{ url_for('static', path='client/img/close.svg') }}" loading="lazy" alt="Close">
+            </picture>
+        </a>
+        <picture class="bg__image">
+            <img src="{{ url_for('static', path='client/img/bg__1.webp') }}" loading="lazy" alt="">
+        </picture>
+        <form method="post">
+            <div>
+                <picture>
+                    <img src="{{ url_for('static', path='client/img/fucha_2.svg') }}" alt="">
+                </picture>
+                <h1>Войдите или создайте бесплатный аккаунт</h1>
+                <div class="form-floating">
+                    <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            id="emailInput"
+                            placeholder="Электронная почта"
+                            value="{{ form_data.get('email', '') }}"
+                            required
+                    >
+                    <label for="emailInput">Электронная почта</label>
+                    <div class="input__buttons">
+                        <picture class="clear-input">
+                            <img src="{{ url_for('static', path='client/img/close.svg') }}" width="12" height="12" alt="">
+                        </picture>
+                    </div>
+                </div>
+                <div class="form-floating">
+                    <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            id="passwordInput"
+                            placeholder="Пароль"
+                            value="{{ form_data.get('password', '') }}"
+                            required
+                    >
+                    <label for="passwordInput">Пароль</label>
+                    <div class="input__buttons">
+                        <picture class="eye eye-closed">
+                            <img src="{{ url_for('static', path='client/img/eye_closed.svg') }}" alt="">
+                        </picture>
 
-                    <div class="form-floating mb-3">
-                        <input type="email" name="email" class="form-control" id="emailInput" placeholder="E-mail" value="{{ form_data.get('email', '') }}" required>
-                        <label for="emailInput">E-mail</label>
+                        <picture class="eye eye-opened">
+                            <img src="{{ url_for('static', path='client/img/eye_opened.svg') }}" alt="">
+                        </picture>
+
+                        <picture class="clear-input">
+                            <img src="{{ url_for('static', path='client/img/close.svg') }}" width="12" height="12" alt="">
+                        </picture>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password" value="{{ form_data.get('password', '') }}" required>
-                        <label for="passwordInput">Password</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 p-3">Войти</button>
-                    <a href="{{ url_for('get_register') }}" class="btn btn-outline-primary p-3 w-100 mt-3">Создать аккаунт</a>
-                </form>
+                </div>
             </div>
-        </div>
+            <div>
+                <button class="button__1" type="submit">Продолжить</button>
+                <span class="button__2">Восстановить пароль</span>
+                <p>Продолжая, вы соглашаетесь с <a href="#">Условиями использования</a> Fucha</p>
+            </div>
+        </form>
     </div>
+
+    <script>
+        document.querySelectorAll('.form-floating').forEach(field => {
+            const input = field.querySelector('input');
+            const clearBtn = field.querySelector('.clear-input');
+            const closedEye = field.querySelector('.eye-closed');
+            const openedEye = field.querySelector('.eye-opened');
+
+            // Показ/скрытие крестика
+            function updateClearButton() {
+                if (!clearBtn) return;
+
+                clearBtn.style.display = input.value ? 'block' : 'none';
+            }
+
+            updateClearButton();
+
+            input.addEventListener('input', updateClearButton);
+
+            // Очистка поля
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    input.value = '';
+                    input.focus();
+                    updateClearButton();
+                });
+            }
+
+            if (closedEye && openedEye) {
+
+                function updateEye() {
+                    if (input.type === 'password') {
+                        closedEye.style.display = 'block';
+                        openedEye.style.display = 'none';
+                    } else {
+                        closedEye.style.display = 'none';
+                        openedEye.style.display = 'block';
+                    }
+                }
+
+                updateEye();
+
+                closedEye.addEventListener('click', () => {
+                    input.type = 'text';
+                    updateEye();
+                });
+
+                openedEye.addEventListener('click', () => {
+                    input.type = 'password';
+                    updateEye();
+                });
+            }
+        });
+    </script>
+
 {% endblock %}

@@ -39,6 +39,7 @@ em, i, .italic {
     --primary: #B07DFC;
     --primary_dark: #965EEB;
     --radius_1: 1rem;
+    --input_bg: #F5F5F6;
 }
 
 /* Применяем SF UI Display как основной шрифт для всего документа */
@@ -540,14 +541,14 @@ span[data-percent]::after {
     line-height: 20px;
     letter-spacing: -5%;
     color: var(--text_gray);
-    margin: 0;
+    margin: 0 0 1rem 0;
 }
 
-.welcome__block a {
+.button__1,
+.button__2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
     width: 100%;
     color: var(--bg);
     border-radius: var(--radius_1);
@@ -557,10 +558,175 @@ span[data-percent]::after {
     font-weight: 500;
     letter-spacing: -5%;
     padding: 13px;
+    border: 0;
 }
 
-.welcome__block a:hover {
+.button__1:hover {
     background-color: var(--primary);
+}
+
+.button__2 {
+    background-color: transparent;
+    color: var(--black);
+}
+
+.button__2:hover {
+    color: var(--primary_dark);
+}
+
+.close__button {
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    border: 1px solid var(--bg);
+    background-color: #EFEFEF80;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    line-height: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.close__button__type__1 {
+    position: absolute;
+    z-index: 2;
+    left: 1rem;
+    top: 1rem;
+}
+
+.auth__page {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.bg__image {
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.bg__image::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 76px;
+    z-index: 1;
+    background: linear-gradient(to top, #fff, #ffffff00);
+    bottom: 0;
+    left: 0;
+}
+
+.bg__image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.auth__page form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    padding: 1.5rem 1rem 1.25rem 1rem;
+    width: 100%;
+    flex-grow: 1;
+    gap: 2rem;
+}
+
+.auth__page form > div {
+    width: 100%;
+}
+
+.auth__page h1 {
+    color: var(--black);
+    font-size: 30px !important;
+    letter-spacing: -3%;
+    line-height: 32px;
+    margin: 1rem 0 .75rem 0;
+}
+
+.auth__page form > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .375rem;
+}
+
+.auth__page p {
+    color: var(--text_gray);
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: -6%;
+    margin: .25rem 0 0 0;
+}
+
+.auth__page p a {
+    color: var(--black);
+}
+
+.auth__page p a:hover {
+    color: var(--primary_dark);
+}
+
+.auth__page .form-floating {
+    margin-bottom: .625rem;
+}
+
+.form-floating .form-control {
+    padding: 20px 12px 6px 12px !important;
+    min-height: 44px !important;
+    border-radius: var(--radius_1);
+    height: 44px !important;
+    background-color: var(--input_bg) !important;
+    border: 0;
+    font-size: 15px !important;
+    letter-spacing: -5%;
+    color: var(--black) !important;
+    line-height: 20px !important;
+}
+
+.form-floating>label {
+    display: flex;
+    align-items: center;
+    padding: .75rem;
+    color: var(--text_gray);
+    font-size: 15px;
+    letter-spacing: -5%;
+    line-height: 20px;
+}
+
+.form-floating>label::after {
+    display: none !important;
+}
+
+.input__buttons {
+    position: absolute;
+    height: 100%;
+    line-height: 0;
+    z-index: 1;
+    top: 0;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.clear-input {
+    display: none;
+    cursor: pointer;
+}
+
+.eye {
+    cursor: pointer;
+}
+
+.eye-opened {
+    display: none;
 }
 
 @media (min-width: 1440px) {
