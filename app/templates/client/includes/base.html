@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', path='client/css/style.css' )}}?v=8">
 </head>
 
-<body class="d-flex flex-column vh-100 p-0">
+<body class="d-flex flex-column vh-100" style="background: url({{ url_for('static', path='client/img/bg__1.webp') }}) top center no-repeat #fff !important; background-size: 100% !important;">
 
     {% block content %}{% endblock %}
     {% include 'client/includes/footer.html' %}
