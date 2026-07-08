@@ -45,7 +45,17 @@ em, i, .italic {
 /* Применяем SF UI Display как основной шрифт для всего документа */
 body {
     font-family: 'SF UI Display Regular', 'Arial', sans-serif !important;
-    background-color: var(--bg) !important;
+    background-color: red !important;
+}
+
+body::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:350px;
+    background:url("../img/bg__1.webp") center top / 100% auto no-repeat;
 }
 
 select,
