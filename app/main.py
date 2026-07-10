@@ -9,7 +9,7 @@ from app.core.limiter import limiter
 from app.database import engine
 from app.redis import redis_client
 
-from app.routes import test
+from app.routes import test, api
 from app.routes.admin import home as admin_home
 from app.routes.client import home as client_home, auth, profile as client_profile, challenges as client_challenges
 
@@ -58,6 +58,9 @@ app.include_router(admin_home)
 
 # Роуты тестирования (Redis / Cookies / Session)
 app.include_router(test)
+
+# Роуты API
+app.include_router(api.api)
 
 # Статика и загруженные файлы
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
