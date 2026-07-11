@@ -7,7 +7,7 @@ from app.settings import templates
 from app.utils.get_current_user import user_or_guest
 
 home = APIRouter(
-    include_in_schema=True,
+    include_in_schema=False,
     tags=["Главная страница пользователя"]
 )
 

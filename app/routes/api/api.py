@@ -1,19 +1,21 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import JSONResponse
+from app.utils.security import access
 
 api = APIRouter(
     include_in_schema=True,
-    prefix="/api",
+    prefix="/api/v1",
     tags=["API"]
 )
 
 
 @api.get(
-    path="/v1/test",
+    path="/test",
     summary="Просмотр Cookies"
 )
 async def redis_sessions(
-        request: Request
+        request: Request,
+        _: None = Depends(access),
 ) -> JSONResponse:
 
     sessions = {
@@ -23,3 +25,8 @@ async def redis_sessions(
     }
 
     return JSONResponse(content=sessions)
+
+
+@api.post("/auth")
+async def auth(request: Request) -> JSONResponse:
+    ...

@@ -16,7 +16,7 @@ from app.utils.jwt_tokens import create_access_token, create_refresh_token, ALGO
 from app.utils.user_exists import user_exists
 
 auth = APIRouter(
-    include_in_schema=True,
+    include_in_schema=False,
     tags=["Авторизация / Регистрация"]
 )
 

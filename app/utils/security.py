@@ -1,4 +1,7 @@
 from passlib.context import CryptContext
+from redis.http.http_client import HttpResponse
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
@@ -20,3 +23,13 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     :return: bool
     """
     return pwd_context.verify(plain_password, hashed_password)
+
+
+async def access(
+        request: Request,
+) -> None or PlainTextResponse:
+
+    return PlainTextResponse(
+        content='Unauthorized',
+        status_code=401
+    )

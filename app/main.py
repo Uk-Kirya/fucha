@@ -11,7 +11,6 @@ from app.redis import redis_client
 
 from app.routes import test, api
 from app.routes.admin import home as admin_home
-from app.routes.client import home as client_home, auth, profile as client_profile, challenges as client_challenges
 
 from app.settings import settings
 
@@ -20,7 +19,6 @@ from app.middlewares import (
     CookieMiddleware,
     FlashMiddleware,
     LoggerMiddleware,
-    DeviceDefinitionMiddleware,
 )
 
 from slowapi.errors import RateLimitExceeded
@@ -43,15 +41,8 @@ app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(AuthMiddleware)
 app.add_middleware(FlashMiddleware)
 app.add_middleware(LoggerMiddleware)
-# app.add_middleware(DeviceDefinitionMiddleware)
 app.add_middleware(CookieMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
-
-# Роуты авторизации / регистрации / восстановления доступа
-app.include_router(auth)
-app.include_router(client_home)
-app.include_router(client_profile)
-app.include_router(client_challenges)
 
 # Роуты панели администрирования
 app.include_router(admin_home)
@@ -60,7 +51,7 @@ app.include_router(admin_home)
 app.include_router(test)
 
 # Роуты API
-app.include_router(api.api)
+app.include_router(api)
 
 # Статика и загруженные файлы
 app.mount("/static", StaticFiles(directory="app/static"), name="static")

@@ -8,7 +8,7 @@ from app.utils import get_current_user
 from app.utils.get_current_user import user_or_guest, get_user, require_roles
 
 profile = APIRouter(
-    include_in_schema=True,
+    include_in_schema=False,
     tags=["Профиль пользователя"]
 )
 

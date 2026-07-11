@@ -1,21 +1,17 @@
 from starlette.responses import RedirectResponse
 
-from app.database import get_async_db
 from app.models import User
 from app.redis import redis_client
 from app.schemas.user_schema import UserWithRole
-from app.settings import templates, settings
+from app.settings import templates
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse, JSONResponse
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.responses import HTMLResponse
 
-from app.logs.logger_config import logger
-from app.utils.flash import set_flash
 from app.utils.get_current_user import require_roles
 
 home = APIRouter(
-    include_in_schema=True,
+    include_in_schema=False,
     prefix="/admin",
     tags=["Панель администрирования"]
 )
