@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     SESSION_TTL: int
 
+    API_KEY: str
+    API_KEY_NAME: str
+
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str

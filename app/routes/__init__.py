@@ -1,7 +1,7 @@
 from app.routes.test import test
-from app.routes.api import api
+from app.routes.api import auth
 
 __all__ = [
     "test",
-    "api",
+    "auth.py",
 ]

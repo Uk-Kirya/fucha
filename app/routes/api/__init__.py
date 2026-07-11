@@ -1,5 +1,5 @@
-from app.routes.api.api import api
+from app.routes.api.auth import auth
 
 __all__ = [
-    "api",
+    "auth",
 ]

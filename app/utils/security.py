@@ -1,14 +1,14 @@
+from fastapi import HTTPException, Depends
 from passlib.context import CryptContext
-from redis.http.http_client import HttpResponse
 from starlette.requests import Request
-from starlette.responses import PlainTextResponse
+from starlette.responses import JSONResponse
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
     """
-    Хэшируем пароль при созданииform_data
+    Хэшируем пароль при создании form_data
     :param password: Password str
     :return: Hashed password str
     """
@@ -23,13 +23,3 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     :return: bool
     """
     return pwd_context.verify(plain_password, hashed_password)
-
-
-async def access(
-        request: Request,
-) -> None or PlainTextResponse:
-
-    return PlainTextResponse(
-        content='Unauthorized',
-        status_code=401
-    )

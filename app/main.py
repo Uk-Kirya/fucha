@@ -19,6 +19,7 @@ from app.middlewares import (
     CookieMiddleware,
     FlashMiddleware,
     LoggerMiddleware,
+    AccessMiddleware
 )
 
 from slowapi.errors import RateLimitExceeded
@@ -43,6 +44,7 @@ app.add_middleware(FlashMiddleware)
 app.add_middleware(LoggerMiddleware)
 app.add_middleware(CookieMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
+app.add_middleware(AccessMiddleware)
 
 # Роуты панели администрирования
 app.include_router(admin_home)
@@ -51,7 +53,7 @@ app.include_router(admin_home)
 app.include_router(test)
 
 # Роуты API
-app.include_router(api)
+app.include_router(api.auth)
 
 # Статика и загруженные файлы
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
