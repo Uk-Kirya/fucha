@@ -7,8 +7,12 @@ from app.database import get_async_db
 from app.models import User
 from app.redis import redis_client
 from app.schemas.login_schema import LoginSchema
-from app.utils.jwt_tokens import create_access_token, create_refresh_token, REFRESH_TTL
+from app.settings import settings
+from app.utils.jwt_tokens import create_access_token, create_refresh_token, REFRESH_TTL, ALGORITHM, blacklist_token
 from app.utils.security import verify_password
+
+from jose import jwt, JWTError
+from datetime import datetime, timezone
 
 auth = APIRouter(
     include_in_schema=True,
@@ -148,7 +152,55 @@ async def logout(
     :return:
     """
 
-    return JSONResponse({"success": True})
+    auth_header = request.headers.get("Authorization")
+    refresh_token = request.headers.get("X-Refresh-Token")
+
+    access_token = None
+
+    if auth_header and auth_header.startswith("Bearer "):
+        access_token = auth_header[7:]
+
+    if refresh_token:
+        await redis_client.delete(
+            f"refresh:{refresh_token}"
+        )
+
+    if access_token:
+
+        try:
+
+            payload = jwt.decode(
+                access_token,
+                settings.SECRET_KEY,
+                algorithms=[ALGORITHM]
+            )
+
+            print("PAYLOAD:", payload)
+
+            jti = payload.get("jti")
+            exp = payload.get("exp")
+
+            if jti and exp:
+
+                now = datetime.now(timezone.utc).timestamp()
+
+                ttl = int(exp - now)
+
+                if ttl > 0:
+                    await blacklist_token(
+                        jti,
+                        ttl
+                    )
+
+        except JWTError as e:
+            print("JWT ERROR:", e)
+
+    return JSONResponse(
+        content={
+            "success": True
+        },
+        status_code=200
+    )
 
 
 @auth.post(
