@@ -44,7 +44,7 @@ app.add_middleware(FlashMiddleware)
 app.add_middleware(LoggerMiddleware)
 app.add_middleware(CookieMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
-app.add_middleware(AccessMiddleware)
+# app.add_middleware(AccessMiddleware)
 
 # Роуты панели администрирования
 app.include_router(admin_home)

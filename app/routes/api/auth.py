@@ -5,6 +5,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_async_db
 from app.models import User
+from app.redis import redis_client
+from app.schemas.login_schema import LoginSchema
+from app.utils.jwt_tokens import create_access_token, create_refresh_token, REFRESH_TTL
+from app.utils.security import verify_password
 
 auth = APIRouter(
     include_in_schema=True,
@@ -46,20 +50,21 @@ async def test_api(
 )
 async def login(
         request: Request,
-        email: str | None,
-        password: str | None,
+        data: LoginSchema,
         db: AsyncSession = Depends(get_async_db),
 ) -> JSONResponse:
     """
     Вводим логин и пароль, и авторизовываемся. Получаем токен и сохраняем его у себя
+    :param data: Data from request
     :param request: Request Object
-    :param email: Email пользователя
-    :param password: Пароль пользователя
     :param db: DB Session Object
     :return: JsonResponse
     """
 
     errors = {}
+
+    email = data.email
+    password = data.password
 
     if email.strip() != '':
         if '@' not in email:
@@ -114,15 +119,16 @@ async def login(
             status_code=401
         )
 
+    access = create_access_token(int(existing_user.id))
+    refresh = create_refresh_token()
+
+    await redis_client.setex(f"refresh:{refresh}", REFRESH_TTL, str(existing_user.id))
+
     return JSONResponse(
         content={
             "success": True,
-            "user": {
-                "id": existing_user.id,
-                "email": existing_user.email,
-                "name": existing_user.name,
-                "is_active": existing_user.is_active,
-            }
+            "access_token": access,
+            "refresh_token": refresh
         },
         status_code=200
     )
@@ -141,6 +147,8 @@ async def logout(
     :param request:
     :return:
     """
+
+    return JSONResponse({"success": True})
 
 
 @auth.post(
