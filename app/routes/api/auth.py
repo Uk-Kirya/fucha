@@ -8,6 +8,7 @@ from app.models import User
 from app.redis import redis_client
 from app.schemas.login_schema import LoginSchema
 from app.settings import settings
+from app.utils.get_current_user import get_api_user
 from app.utils.jwt_tokens import create_access_token, create_refresh_token, REFRESH_TTL, ALGORITHM, blacklist_token
 from app.utils.security import verify_password
 
@@ -16,17 +17,19 @@ from datetime import datetime, timezone
 
 auth = APIRouter(
     include_in_schema=True,
-    prefix="/api/v1",
+    prefix="/api/v1/auth",
     tags=["API Auth"]
 )
 
 
 @auth.get(
     path="/test",
-    summary="Тестовый route"
+    summary="Тестовый route",
+    include_in_schema=False,
 )
 async def test_api(
         request: Request,
+        _: User = Depends(get_api_user),
 ) -> JSONResponse:
     """
     Тестируем передачу данных на приложение SWIFT
@@ -48,7 +51,7 @@ async def test_api(
 
 
 @auth.post(
-    path="/auth/login",
+    path="/login",
     summary="Логирование в приложении",
     response_class=JSONResponse
 )
@@ -139,7 +142,71 @@ async def login(
 
 
 @auth.post(
-    path="/auth/logout",
+    path="/refresh",
+    summary="Обновление токенов",
+    response_class=JSONResponse
+)
+async def refresh_tokens(
+        request: Request,
+) -> JSONResponse:
+    """
+    Обновляет access token с помощью refresh token
+    """
+    refresh_token = request.headers.get("X-Refresh-Token")
+
+    if not refresh_token:
+        return JSONResponse(
+            status_code=400,
+            content={
+                "success": False,
+                "errors": {"refresh_token": "Refresh token is required"}
+            }
+        )
+
+    # Check if refresh token exists in Redis
+    user_id = await redis_client.get(f"refresh:{refresh_token}")
+
+    if not user_id:
+        return JSONResponse(
+            status_code=401,
+            content={
+                "success": False,
+                "errors": {"refresh_token": "Invalid or expired refresh token"}
+            }
+        )
+
+    # Rotate tokens
+    new_access = create_access_token(int(user_id))
+    new_refresh = create_refresh_token()
+
+    # Save new refresh token
+    await redis_client.setex(
+        f"refresh:{new_refresh}",
+        REFRESH_TTL,
+        user_id
+    )
+
+    # Delete old refresh token
+    await redis_client.delete(f"refresh:{refresh_token}")
+
+    response = JSONResponse(
+        content={
+            "success": True,
+            "access_token": new_access,
+            "refresh_token": new_refresh
+        },
+        status_code=200
+    )
+
+    # Also set headers for convenience
+    response.headers["X-Access-Token"] = new_access
+    response.headers["X-Refresh-Token"] = new_refresh
+
+    return response
+
+
+@auth.post(
+    path="/logout",
     summary="Разлогирование из приложения",
     response_class=JSONResponse
 )
@@ -172,7 +239,8 @@ async def logout(
             payload = jwt.decode(
                 access_token,
                 settings.SECRET_KEY,
-                algorithms=[ALGORITHM]
+                algorithms=[ALGORITHM],
+                options={"verify_exp": False}
             )
 
             print("PAYLOAD:", payload)
@@ -204,7 +272,7 @@ async def logout(
 
 
 @auth.post(
-    path="/auth/reset-password",
+    path="/reset-password",
     summary="Отправление ссылки сброса пароля на почту",
     response_class=JSONResponse
 )
@@ -231,3 +299,4 @@ async def confirm_new_password(
     :param request:
     :return:
     """
+    ...

@@ -46,6 +46,30 @@ async def get_user(
     return user
 
 
+async def get_api_user(
+        request: Request,
+        db: AsyncSession = Depends(get_async_db),
+) -> User:
+    api_user = request.state.user
+
+    if not api_user:
+        raise HTTPException(
+            status_code=401,
+            detail="Unauthorized"
+        )
+
+    result = select(User).where(User.id == api_user.id).options(selectinload(User.role))
+    user = (await db.execute(result)).scalar_one_or_none()
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="Not found User"
+        )
+
+    return user
+
+
 async def user_or_guest(request: Request) -> User:
     return request.state.user if request.state.user else None
 

@@ -15,7 +15,8 @@ test = APIRouter(
 
 @test.get(
     path="/cookies",
-    summary="Просмотр Cookies"
+    summary="Просмотр Cookies",
+    include_in_schema=False,
 )
 async def redis_sessions(
         request: Request
