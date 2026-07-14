@@ -34,17 +34,13 @@ async def test_api(
     """
     Тестируем передачу данных на приложение SWIFT
     :param request: Request Object
-    :return:
+    :return: JSONResponse Object
     """
 
     sessions = {
-        "data": {
-            "id": 1,
-            "name": "Kirill",
-            "age": 34,
-            "city": "Sochi",
-            "email": "udarnik.kirill@gmail.com"
-        },
+        "id": 1,
+        "name": _.name,
+        "email": _.email
     }
 
     return JSONResponse(content=sessions)
@@ -123,7 +119,7 @@ async def login(
                     "password": "Неверный пароль"
                 }
             },
-            status_code=401
+            status_code=400
         )
 
     access = create_access_token(int(existing_user.id))
@@ -300,3 +296,30 @@ async def confirm_new_password(
     :return:
     """
     ...
+
+
+@auth.get(
+    path="/me",
+    summary="Данные о пользователе",
+    response_class=JSONResponse
+)
+async def me(
+        request: Request,
+        _: User = Depends(get_api_user),
+) -> JSONResponse:
+    """
+    Извлекаем данные о пользователе и передаем их в JSON в Swift
+    :param request: Request Object
+    :param _: User Object
+    :return: JSONResponse Object
+    """
+
+    sessions = {
+        "data": {
+            "id": 1,
+            "name": _.name,
+            "email": _.email
+        },
+    }
+
+    return JSONResponse(content=sessions)
