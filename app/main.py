@@ -9,7 +9,7 @@ from app.core.limiter import limiter
 from app.database import engine
 from app.redis import redis_client
 
-from app.routes import test, api
+from app.routes import test, api, web
 from app.routes.admin import home as admin_home
 
 from app.settings import settings
@@ -45,6 +45,9 @@ app.add_middleware(LoggerMiddleware)
 app.add_middleware(CookieMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 # app.add_middleware(AccessMiddleware)
+
+# Главная страница WEB-a
+app.include_router(web.web)
 
 # Роуты панели администрирования
 app.include_router(admin_home)

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>Fucha — Для лучшего будущего!</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ url_for('static', path='web/img/fav.png') }}" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="{{ url_for('static', path='web/css/style.css' )}}?v=1">
+</head>
+
+<body class="d-flex flex-column vh-100">
+
+    <div class="wrapper__block">
+        <div>
+            <picture data-aos="zoom-in" data-aos-delay="">
+                <img src="{{ url_for('static', path='web/img/logo.svg') }}" alt="">
+            </picture>
+            <h1 data-aos="zoom-in" data-aos-delay="300">Fucha: ваш новый планнер уже в App Store</h1>
+            <p data-aos="zoom-in" data-aos-delay="600">Приложение доступно для iOS. Отсканируйте QR-код, чтобы начать путь к продуктивности.</p>
+            <picture class="d-none d-lg-block" data-aos="zoom-in" data-aos-delay="900">
+                <img src="{{ url_for('static', path='web/img/qr.svg') }}" alt="" width="160">
+            </picture>
+            <a href="#" target="_blank">
+                <picture class="d-lg-none" data-aos="zoom-in" data-aos-delay="900">
+                    <img src="{{ url_for('static', path='web/img/app_store.svg') }}" alt="">
+                </picture>
+            </a>
+        </div>
+        <div>
+            <picture data-aos="zoom-out" data-aos-delay="450">
+                <img src="{{ url_for('static', path='web/img/iphone.png') }}" alt="">
+            </picture>
+        </div>
+    </div>
+
+    <!-- Стили -->
+    <link rel="stylesheet" href="{{ url_for('static', path='client/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='client/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='client/css/san_francisco.css') }}">
+
+    <!-- Скрипты -->
+    <script src="{{ url_for('static', path='client/js/aos.js') }}"></script>
+
+    <script>
+        AOS.init({
+            offset: 120,
+            duration: 1500,
+            once: false,
+        });
+    </script>
+
+</body>
+
+</html>
